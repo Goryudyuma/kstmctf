@@ -157,6 +157,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
 		'Thujohn\Twitter\TwitterServiceProvider',
+		'Laravel\Socialite\SocialiteServiceProvider',
     ],
 
     /*
@@ -204,6 +205,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
 		'Twitter' => 'Thujohn\Twitter\Facades\Twitter',
+		'Socialite' => 'Laravel\Socialite\Facades\Socialite',
     ],
 
 ];
