@@ -16,12 +16,10 @@ class CreateCtfusersTable extends Migration
 			$table->increments('id');
 			$table->integer('uid')->unsigned()->unique();
 			$table->string('name');
-			$table->string('screen_name');
-			$table->string('image');
-			$table->string('access_token');
-			$table->string('access_token_secret');
+			$table->string('nickname');
+			$table->string('avatar');
+			$table->rememberToken();
 			$table->timestamps();
-			$table->index(['access_token', 'access_token_secret']);
 		});
 	}
 

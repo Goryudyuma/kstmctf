@@ -15,8 +15,11 @@ Route::get('/', function () {
 	return view('welcome');
 });
 
-Route::get('/a', 'MainController@index');
+Route::get('/questionlist', 'MainController@index');
 
+Route::get('auth/twitter', 'AuthController@redirectToProvider');
+Route::get('auth/twitter/callback', 'AuthController@handleProviderCallback');
+/*
 Route::get('twitter/login', ['as' => 'twitter.login', function(){
 	// your SIGN IN WITH TWITTER  button should point to this route
 	$sign_in_twitter = true;
@@ -100,3 +103,4 @@ Route::get('twitter/logout', ['as' => 'twitter.logout', function(){
 	Session::forget('access_token');
 	return Redirect::to('/')->with('flash_notice', 'You\'ve successfully logged out!');
 }]);
+ */
