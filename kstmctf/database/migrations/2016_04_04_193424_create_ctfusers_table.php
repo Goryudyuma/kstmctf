@@ -20,6 +20,7 @@ class CreateCtfusersTable extends Migration
 			$table->string('avatar');
 			$table->rememberToken();
 			$table->timestamps();
+			$table->index('uid');
 		});
 	}
 

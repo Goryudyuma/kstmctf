@@ -17,9 +17,9 @@
 		</div>
 		<!-- 3.リストの配置 -->
 		<ul class="nav navbar-nav">
-		<li class="active"><a href="#">本部からのお知らせ</a></li>
-		<li><a href="./questionlist">問題一覧</a></li>
-		<li><a href="#">Ranking</a></li>
+		<li class="active">{{Html::link(env('APP_URL','.').'questionlist', '問題一覧')}}</li>
+		<li><a href="404">Ranking</a></li>
+		<li class="active">{{Html::link(env('APP_URL','.').'create', '問題投稿')}}</li>
 	</ul>
 </div>
 </nav>
