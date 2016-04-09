@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use DB;
 use App\Question;
 use App\Solved;
+use App\User;
 use Illuminate\Support\Facades\Request;
 
 class MainController extends Controller
@@ -64,5 +66,22 @@ class MainController extends Controller
 			return redirect('/create')->with('message','登録されました！');
 		}
 
+	}
+
+	public function ranking()
+	{
+		$result=User::Join('solved', 'ctfusers.uid', '=', 'solved.uid')->select(DB::raw('count(*) as countsolved, ctfusers.nickname as nickname'))->groupBy('solved.uid')->orderBy('countsolved', 'desc')->get();
+		$rank = 0;
+		$num = 1;
+		$prev = PHP_INT_MAX;
+		foreach ($result as &$user) {
+			if ($user->countsolved !== $prev) {
+				$rank = $num;
+				$prev = $user->countsolved;
+			}
+			$user->ranking = $rank;
+			$num++;
+		}
+		return view('ranking')->with('result', $result);
 	}
 }

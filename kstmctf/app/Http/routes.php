@@ -24,3 +24,5 @@ Route::post('/createcheck', 'MainController@createcheck');
 Route::get('auth/twitter', 'AuthController@redirectToProvider');
 Route::get('auth/twitter/callback', 'AuthController@handleProviderCallback');
 
+Route::get('/ranking', 'MainController@ranking');
+
