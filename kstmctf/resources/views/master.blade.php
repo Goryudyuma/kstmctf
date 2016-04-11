@@ -9,7 +9,7 @@
 		<!-- jQuery読み込み -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	</head>
-	<body>
+	<body body style="padding-top:70px;">
 		<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 		<div class="navbar-header">
