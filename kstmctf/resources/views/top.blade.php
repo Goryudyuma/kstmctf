@@ -6,7 +6,7 @@
 </h1>
 @if(!Auth::check())
 <div class="social-buttons">
-{{Html::link(env('APP_URL','.').'auth/twitter', 'Twitter')}}
+<a href="{{URL::to(env('APP_URL','.').'auth/twitter')}}"><img src={{asset('images/sign-in-with-twitter-gray.png')}} alt='Sign in with Twitter'</a>
 
 </div>
 @endif
