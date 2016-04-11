@@ -5,12 +5,18 @@
 <div class="container">
 <!--	<label class="control-label">Flagを入力</label>-->
 {{Form::open(['action'=>'MainController@createcheck'])}}
+<div class="form-group">
 title
-{{Form::text('title')}}<br/>
+{{Form::text('title',null,['class'=>'form-control'])}}
+</div>
+<div class="form-group">
 url 
-{{Form::text('url')}}<br/>
+{{Form::input('url','url',null,['class'=>'form-control'])}}<br/>
+</div>
+<div class="form-group">
 Flag
-{{Form::text('flag')}}
+{{Form::text('flag',null,['class'=>'form-control'])}}
+</div>
 {{Form::submit()}}
 {{Form::close()}}
 </div>
