@@ -5,9 +5,9 @@
 {{ Session::get('message') }}
 </h1>
 <div class="container">
-	<label class="control-label">Flagを入力</label>
-{{Form::open(['action'=>'MainController@check'])}}
-{{Form::text('flag')}}
+{{Form::open(['action'=>'MainController@check','style'=>'border: 1px solid #079DD4;border-radius: 5px;padding: 13px;background: #ADDCE6;'])}}
+{{Form::label('flag','Flagを入力',['style'=>'display:block;'])}}
+{{Form::text('flag',null,['style'=>'width:60%;'])}}
 {{Form::submit()}}
 {{Form::close()}}
 </div>
