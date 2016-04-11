@@ -11,18 +11,21 @@
 |
  */
 
-Route::get('/', function () {
-	return redirect('/questionlist');
-});
+Route::get('/', 'MainController@index');
+Route::get('/top', 'MainController@index');
 
-Route::get('/questionlist', 'MainController@index');
+Route::get('/questionlist', 'MainController@qlist');
 Route::post('/check', 'MainController@check');
 
 Route::get('/create', 'MainController@create');
 Route::post('/createcheck', 'MainController@createcheck');
 
-Route::get('auth/twitter', 'AuthController@redirectToProvider');
-Route::get('auth/twitter/callback', 'AuthController@handleProviderCallback');
+Route::get('/auth/twitter', 'AuthController@redirectToProvider');
+Route::get('/auth/twitter/callback', 'AuthController@handleProviderCallback');
+
+Route::get('/logout', 'AuthController@logout');
 
 Route::get('/ranking', 'MainController@ranking');
+
+
 

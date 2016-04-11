@@ -73,4 +73,12 @@ class AuthController extends Controller
 				'avatar' => $twitterUser->avatar
 				]);
 	}
+
+	public function logout()
+	{
+		if (Auth::check()) {
+			Auth::logout();
+		}
+		return redirect('/top');
+	}
 }

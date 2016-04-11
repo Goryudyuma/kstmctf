@@ -13,6 +13,11 @@ class MainController extends Controller
 {
 	public function index()
 	{
+		return view('top');
+	}
+
+	public function qlist()
+	{
 		if (!Auth::check()) {
 			return redirect('/auth/twitter');
 		}
