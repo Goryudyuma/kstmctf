@@ -10,7 +10,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	</head>
 	<body>
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 		<div class="navbar-header">
 			{{Html::link(env('APP_URL','.').'top', 'kstm CTF', 'class="navbar-brand"')}}
