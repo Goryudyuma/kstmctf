@@ -12,7 +12,6 @@
  */
 
 Route::get('/', 'MainController@index');
-Route::get('/top', 'MainController@index');
 
 Route::get('/questionlist', 'MainController@qlist');
 Route::post('/check', 'MainController@check');
