@@ -21,8 +21,10 @@
 		<li class="active">{{Html::link(env('APP_URL','.').'ranking', 'Ranking')}}</li>
 		<li class="active">{{Html::link(env('APP_URL','.').'create', '問題投稿')}}</li>
 	</ul>
-	  	<ul class="nav navbar-nav navbar-right">
+		<ul class="nav navbar-nav navbar-right">
+		@if(Auth::check())
 		<li class="active">{{Html::link(env('APP_URL','.').'logout', 'logout')}}</li>
+		@endif
 	</ul>
 </div>
 </nav>
