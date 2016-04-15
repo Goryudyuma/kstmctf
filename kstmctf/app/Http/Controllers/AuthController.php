@@ -79,6 +79,6 @@ class AuthController extends Controller
 		if (Auth::check()) {
 			Auth::logout();
 		}
-		return redirect('/top');
+		return redirect('/');
 	}
 }

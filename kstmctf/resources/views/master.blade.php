@@ -8,12 +8,13 @@
 		<link href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 		<!-- jQuery読み込み -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	</head>
-	<body>
-		<nav class="navbar navbar-default">
+	<body body style="padding-top:70px;">
+		<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 		<div class="navbar-header">
-			{{Html::link(env('APP_URL','.').'top', 'kstm CTF', 'class="navbar-brand"')}}
+			{{Html::link(env('APP_URL','.'), 'kstm CTF', 'class="navbar-brand"')}}
 		</div>
 		<!-- 3.リストの配置 -->
 		<ul class="nav navbar-nav">

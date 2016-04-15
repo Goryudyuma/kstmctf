@@ -19,7 +19,7 @@ class MainController extends Controller
 	public function qlist()
 	{
 		if (!Auth::check()) {
-			return redirect('/auth/twitter');
+			return redirect('/');
 		}
 		$result = Question::Join('ctfusers as c', function($join){$join->on('question.creatorid', '=', 'c.uid');})->leftJoin('solved', function($join){$join->on('question.id', '=', 'solved.qid')->where('solved.uid', '=', Auth::user()->uid);})->select('solved.uid as suid', 'question.title as title', 'question.url as url', 'nickname')->get();
 		return view('index')->with('result', $result);
@@ -28,7 +28,7 @@ class MainController extends Controller
 	public function check()
 	{
 		if (!Auth::check()) {
-			return redirect('/auth/twitter');
+			return redirect('/');
 		}
 
 		#		return var_dump(Request::all());
@@ -50,7 +50,7 @@ class MainController extends Controller
 	public function create()
 	{
 		if (!Auth::check()) {
-			return redirect('/auth/twitter');
+			return redirect('/');
 		}
 		return view('create');	
 	}
