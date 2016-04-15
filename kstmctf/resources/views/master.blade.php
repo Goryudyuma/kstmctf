@@ -17,13 +17,31 @@
 		</div>
 		<!-- 3.リストの配置 -->
 		<ul class="nav navbar-nav">
-		<li class="active">{{Html::link(env('APP_URL','.').'questionlist', '問題一覧')}}</li>
-		<li class="active">{{Html::link(env('APP_URL','.').'ranking', 'Ranking')}}</li>
-		<li class="active">{{Html::link(env('APP_URL','.').'create', '問題投稿')}}</li>
+
+		@if(Request::url() == env('APP_URL','.').'questionlist')
+		<li class="active">
+		@else
+		<li>
+		@endif
+		{{Html::link(env('APP_URL','.').'questionlist', '問題一覧')}}</li>
+
+		@if(Request::url() == env('APP_URL','.').'ranking')
+		<li class="active">
+		@else
+		<li>
+		@endif
+		{{Html::link(env('APP_URL','.').'ranking', 'Ranking')}}</li>
+
+		@if(Request::url() == env('APP_URL','.').'create')
+		<li class="active">
+		@else
+		<li>
+		@endif
+		{{Html::link(env('APP_URL','.').'create', '問題投稿')}}</li>
 	</ul>
 		<ul class="nav navbar-nav navbar-right">
 		@if(Auth::check())
-		<li class="active">{{Html::link(env('APP_URL','.').'logout', 'logout')}}</li>
+		<li>{{Html::link(env('APP_URL','.').'logout', 'logout')}}</li>
 		@endif
 	</ul>
 </div>
