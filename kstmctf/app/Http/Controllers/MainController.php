@@ -21,7 +21,7 @@ class MainController extends Controller
 		if (!Auth::check()) {
 			return redirect('/');
 		}
-		$result = Question::Join('ctfusers as c', function($join){$join->on('question.creatorid', '=', 'c.uid');})->leftJoin('solved', function($join){$join->on('question.id', '=', 'solved.qid')->where('solved.uid', '=', Auth::user()->uid);})->select('solved.uid as suid', 'question.title as title', 'question.url as url', 'nickname')->get();
+		$result = Question::Join('ctfusers as c', function($join){$join->on('question.userid', '=', 'c.id');})->leftJoin('solved', function($join){$join->on('question.id', '=', 'solved.qid')->where('solved.userid', '=', Auth::user()->id);})->select('solved.userid as suid', 'question.title as title', 'question.url as url', 'nickname')->get();
 		return view('index')->with('result', $result);
 	}
 
@@ -35,10 +35,9 @@ class MainController extends Controller
 		$qid = Question::where('flag', Request::input('flag'))->value('id');
 
 		if ($qid) {
-
 			Solved::firstOrCreate([
+				'userid' => Auth::user()->id,	
 				'qid' => $qid,
-				'uid' => Auth::user()->uid,	
 			]);
 			return redirect('/questionlist')->with('message', '正解！');
 		}else{
@@ -61,21 +60,24 @@ class MainController extends Controller
 		$qid = Question::where('flag', Request::input('flag'))->value('id');
 		if ($qid) {
 			return redirect('/create')->with('message','flagがかぶっています');
-		}else{
-			Question::insert([
-				'title' => Request::input('title'),
-					'url' => Request::input('url'),
-					'flag' => Request::input('flag'),
-					'creatorid' => Auth::user()->uid,
-				]);
-			return redirect('/create')->with('message','登録されました！');
 		}
+		if(preg_match('/^kstm\{.+\}$/', Request::input('flag')) === 0) {
+			return redirect('/create')->with('message','flagはkstm{hogehoge}の形に則ってください');
+		}
+		Question::insert([
+			'title' => Request::input('title'),
+				'url' => Request::input('url'),
+				'flag' => Request::input('flag'),
+				'userid' => Auth::user()->id,
+			]);
+		return redirect('/create')->with('message','登録されました！');
+
 
 	}
 
 	public function ranking()
 	{
-		$result=User::Join('solved', 'ctfusers.uid', '=', 'solved.uid')->select(DB::raw('count(*) as countsolved, ctfusers.nickname as nickname'))->groupBy('solved.uid')->orderBy('countsolved', 'desc')->get();
+		$result=User::Join('solved', 'ctfusers.id', '=', 'solved.userid')->select(DB::raw('count(*) as countsolved, ctfusers.nickname as nickname'))->groupBy('solved.userid')->orderBy('countsolved', 'desc')->get();
 		$rank = 0;
 		$num = 1;
 		$prev = PHP_INT_MAX;

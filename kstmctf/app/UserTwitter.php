@@ -2,18 +2,18 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class UserTwitter extends Model
 {
-	 protected $table = 'ctfusers';
+	 protected $table = 'ctfuserstwitter';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'id', 'nickname'
+        'userid', 'uid', 'name', 'avatar'
     ];
 
     /**

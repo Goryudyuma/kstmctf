@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\User;
+use App\UserTwitter;
 
 use Auth;
 use Socialite;
+use DB;
 
 class AuthController extends Controller
 {
@@ -35,7 +37,7 @@ class AuthController extends Controller
 			return redirect('auth/twitter');
 		}
 
-//		return var_dump($user);
+		//		return var_dump($user);
 		$authUser = $this->findOrCreateUser($user);
 
 		Auth::login($authUser, true);
@@ -51,27 +53,31 @@ class AuthController extends Controller
 	 */
 	private function findOrCreateUser($twitterUser)
 	{
-		$authUser = User::where('uid', $twitterUser->id)->first();
-	//	$authUser = Socialite::driver('twitter')->with($twitterUser->id)->user();
-		
+		$authUser = UserTwitter::where('uid', $twitterUser->id)->first();
+		//	$authUser = Socialite::driver('twitter')->with($twitterUser->id)->user();
+
 
 		if ($authUser){
-			User::where('uid', $twitterUser->id)->update(
+			UserTwitter::where('uid', $twitterUser->id)->update(
 				[
-				'name' => $twitterUser->name,
-				'nickname' => $twitterUser->nickname,
-				'avatar' => $twitterUser->avatar,
-				'updated_at' => NULL
+					'name' => $twitterUser->name,
+					'avatar' => $twitterUser->avatar,
+					'updated_at' => NULL
 				]);
-			return $authUser;
+			return User::where('id', $authUser['userid'])->first();
 		}
 
-		return User::firstOrCreate([
-				'uid' => $twitterUser->id,
-				'name' => $twitterUser->name,
-				'nickname' => $twitterUser->nickname,
-				'avatar' => $twitterUser->avatar
-				]);
+
+		$userid = User::firstOrCreate([
+			'nickname' => $twitterUser->nickname,
+		])->id;
+		UserTwitter::firstOrCreate([
+			'userid' => $userid,
+			'uid' => $twitterUser->id,
+			'name' => $twitterUser->name,
+			'avatar' => $twitterUser->avatar
+		]);
+		return User::where('id', $userid)->first();
 	}
 
 	public function logout()
