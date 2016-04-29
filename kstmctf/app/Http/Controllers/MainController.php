@@ -67,13 +67,13 @@ class MainController extends Controller
 
 	public function createcheck()
 	{
+		if(preg_match('/^kstm\{.+\}$/', Request::input('flag')) === 0) {
+			return redirect('/create')->with('message','flagはkstm{hogehoge}の形に則ってください');
+		}
 
 		$qid = Question::where('flag', Request::input('flag'))->value('id');
 		if ($qid) {
 			return redirect('/create')->with('message','flagがかぶっています');
-		}
-		if(preg_match('/^kstm\{.+\}$/', Request::input('flag')) === 0) {
-			return redirect('/create')->with('message','flagはkstm{hogehoge}の形に則ってください');
 		}
 		Question::insert([
 			'title' => Request::input('title'),
