@@ -33,12 +33,14 @@
 		@endif
 		{{Html::link(env('APP_URL','.').'ranking', 'Ranking')}}</li>
 
+		@if(App::make('App\Http\Controllers\MainController')->iskstmuser())
 		@if(Request::url() == env('APP_URL','.').'create')
 		<li class="active">
 		@else
 		<li>
 		@endif
 		{{Html::link(env('APP_URL','.').'create', '問題投稿')}}</li>
+		@endif
 	</ul>
 		<ul class="nav navbar-nav navbar-right">
 		@if(Auth::check())

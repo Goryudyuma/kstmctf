@@ -7,6 +7,7 @@ use DB;
 use App\Question;
 use App\Solved;
 use App\User;
+use App\UserKstm;
 use Illuminate\Support\Facades\Request;
 
 class MainController extends Controller
@@ -43,12 +44,22 @@ class MainController extends Controller
 		}else{
 			return redirect('/questionlist')->with('message', '不正解！');
 		}
+	}
 
+	public function iskstmuser() {
+		if (!Auth::check()) {
+			return redirect('/');
+		}
+		if (UserKstm::Where('userid', Auth::user()->id) -> count()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function create()
 	{
-		if (!Auth::check()) {
+		if (!Auth::check() || !$this -> iskstmuser()) {
 			return redirect('/');
 		}
 		return view('create');	
