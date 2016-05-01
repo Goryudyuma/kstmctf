@@ -75,7 +75,7 @@ class MainController extends Controller
 		if ($qid) {
 			return redirect('/create')->with('message','flagがかぶっています');
 		}
-		Question::insert([
+		Question::Create([
 			'title' => Request::input('title'),
 				'url' => Request::input('url'),
 				'flag' => Request::input('flag'),

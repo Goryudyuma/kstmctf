@@ -8,4 +8,8 @@ class Question extends Model
 {
 	protected $table = 'question';
     //
+	protected $fillable = [
+		'title', 'url', 'flag', 'userid'
+	];
+
 }
