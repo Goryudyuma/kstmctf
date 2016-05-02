@@ -24,7 +24,7 @@
 @foreach($result as $question)
 		<tr>
 <td>
-{{Html::link($question->url, $question->title, 'target="_blank"')}}
+{{Html::link('/content/'.$question->url, $question->title, 'target="_blank"')}}
 </td>
 			<td>{{$question->nickname}}</td>
 			<td>

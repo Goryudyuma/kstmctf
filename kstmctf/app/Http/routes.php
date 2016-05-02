@@ -26,5 +26,5 @@ Route::get('/logout', 'AuthController@logout');
 
 Route::get('/ranking', 'MainController@ranking');
 
-
+Route::get('/content/{questionid}', 'MainController@content')->where('questionid', '[0-9]+');
 

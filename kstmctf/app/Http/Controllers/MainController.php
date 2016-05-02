@@ -8,6 +8,7 @@ use App\Question;
 use App\Solved;
 use App\User;
 use App\UserKstm;
+use App\QuestionOpen;
 use Illuminate\Support\Facades\Request;
 
 class MainController extends Controller
@@ -22,7 +23,7 @@ class MainController extends Controller
 		if (!Auth::check()) {
 			return redirect('/');
 		}
-		$result = Question::Join('ctfusers as c', function($join){$join->on('question.userid', '=', 'c.id');})->leftJoin('solved', function($join){$join->on('question.id', '=', 'solved.qid')->where('solved.userid', '=', Auth::user()->id);})->select('solved.userid as suid', 'question.title as title', 'question.url as url', 'nickname')->get();
+		$result = Question::Join('ctfusers as c', function($join){$join->on('question.userid', '=', 'c.id');})->leftJoin('solved', function($join){$join->on('question.id', '=', 'solved.qid')->where('solved.userid', '=', Auth::user()->id);})->select('solved.userid as suid', 'question.title as title', 'question.id as url', 'nickname')->get();
 		return view('index')->with('result', $result);
 	}
 
@@ -101,5 +102,16 @@ class MainController extends Controller
 			$num++;
 		}
 		return view('ranking')->with('result', $result);
+	}
+
+	public function content($questionid) {
+		if (!Auth::check()) {
+			return redirect('/');
+		}
+		QuestionOpen::firstOrCreate([
+			'userid' => Auth::user()->id,
+				'questionid' => $questionid,
+		]);		
+		return redirect(Question::where('id', '=', $questionid)->select('url')->first()['url']);
 	}
 }
