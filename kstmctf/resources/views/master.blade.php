@@ -10,13 +10,20 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	</head>
-	<body body style="padding-top:70px;">
+	<body style="padding-top:50px;">
 		<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 		<div class="navbar-header">
 			{{Html::link(env('APP_URL','.'), 'kstm CTF', 'class="navbar-brand"')}}
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#gnavi">
+		<span class="sr-only">メニュー</span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		</button>
 		</div>
 		<!-- 3.リストの配置 -->
+		<div id="gnavi" class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
 
 		@if(Request::url() == env('APP_URL','.').'questionlist')
@@ -41,12 +48,12 @@
 		@endif
 		{{Html::link(env('APP_URL','.').'create', '問題投稿')}}</li>
 		@endif
-	</ul>
-		<ul class="nav navbar-nav navbar-right">
+	</ul><ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
 		@if(Auth::check())
 		<li>{{Html::link(env('APP_URL','.').'logout', 'logout')}}</li>
 		@endif
 	</ul>
+</div>
 </div>
 </nav>
 
