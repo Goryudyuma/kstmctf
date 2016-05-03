@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+class UserKstm extends Model
 {
-	protected $table = 'question';
     //
-	protected $fillable = [
-		'title', 'url', 'flag', 'userid'
-	];
+	protected $table = 'ctfuserskstm';
 
+	protected $fillable = [
+		'userid'
+	];
 }

@@ -9,5 +9,5 @@ class Solved extends Model
 	protected $table = 'solved';
     //
 
-	protected $fillable = ['qid', 'uid'];
+	protected $fillable = ['userid', 'qid'];
 }
