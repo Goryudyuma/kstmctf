@@ -39,7 +39,7 @@ class MainController extends Controller
 		if ($qid) {
 			QuestionOpen::firstOrCreate([
 				'userid' => Auth::user()->id,
-				'questionid' => $questionid,
+				'questionid' => $qid,
 			]);		
 			Solved::firstOrCreate([
 				'userid' => Auth::user()->id,	
