@@ -112,6 +112,9 @@ class MainController extends Controller
 		if (!Auth::check()) {
 			return redirect('/');
 		}
+		if(is_null(Question::where('id', '=', $questionid)->first())) {
+			return redirect('/questionlist');
+		}
 		QuestionOpen::firstOrCreate([
 			'userid' => Auth::user()->id,
 				'questionid' => $questionid,
@@ -120,6 +123,12 @@ class MainController extends Controller
 	}
 
 	public function content($questionid) {
+		if (!Auth::check()) {
+			return redirect('/');
+		}
+		if(is_null(Question::where('id', '=', $questionid)->first())) {
+			return redirect('/questionlist');
+		}
 		$question['id'] = $questionid;
 		$question['challengecount'] = QuestionOpen::where('questionid', '=', $questionid)->count();
 		$question['solvedcount'] = Solved::where('qid', '=', $questionid)->count();
