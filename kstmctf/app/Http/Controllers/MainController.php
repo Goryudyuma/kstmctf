@@ -37,6 +37,10 @@ class MainController extends Controller
 		$qid = Question::where('flag', Request::input('flag'))->value('id');
 
 		if ($qid) {
+			QuestionOpen::firstOrCreate([
+				'userid' => Auth::user()->id,
+				'questionid' => $questionid,
+			]);		
 			Solved::firstOrCreate([
 				'userid' => Auth::user()->id,	
 				'qid' => $qid,
