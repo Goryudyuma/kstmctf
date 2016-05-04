@@ -104,14 +104,27 @@ class MainController extends Controller
 		return view('ranking')->with('result', $result);
 	}
 
-	public function content($questionid) {
+	public function question($questionid) {
 		if (!Auth::check()) {
 			return redirect('/');
 		}
 		QuestionOpen::firstOrCreate([
 			'userid' => Auth::user()->id,
 				'questionid' => $questionid,
-		]);		
+			]);		
 		return redirect(Question::where('id', '=', $questionid)->select('url')->first()['url']);
+	}
+
+	public function content($questionid) {
+		$question['id'] = $questionid;
+		$question['challengecount'] = QuestionOpen::where('questionid', '=', $questionid)->count();
+		$question['solvedcount'] = Solved::where('qid', '=', $questionid)->count();
+		if ($question['solvedcount'] !== 0) {
+			$question['avetime'] = Solved::where('qid', '=', $questionid)->join('openquestion', function($join) {$join->on('solved.qid', '=', 'questionid')->on('solved.userid', '=', 'openquestion.userid');})->groupBy('qid')->avg(DB::raw('(solved.created_at - openquestion.created_at)'));
+			$question['mintime'] = Solved::where('qid', '=', $questionid)->join('openquestion', function($join) {$join->on('solved.qid', '=', 'questionid')->on('solved.userid', '=', 'openquestion.userid');})->orderBy('time')->select(DB::raw('(`solved`.`created_at` - `openquestion`.`created_at`) as time, `solved`.`userid` as `userid`'))->first();
+			$question['minuser'] = User::where('id', '=', $question['mintime']['userid'])->first();
+		}
+		$question['title'] = Question::where('id', '=', $questionid)->first()['title'];
+		return view('content')->with('question', $question);
 	}
 }
