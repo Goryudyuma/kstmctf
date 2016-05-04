@@ -1,8 +1,0 @@
-@extends('master')
-
-@section('content')
-{{$question->id}}
-{{$question->solvedcount}}
-{{$question->challengecount}}
-{{Html::link('/question/'.$question->url, $question->title, 'target="_blank"')}}
-@stop
