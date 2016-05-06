@@ -22,6 +22,11 @@ Route::post('/createcheck', 'MainController@createcheck');
 Route::get('/auth/twitter', 'AuthController@redirectToProvider');
 Route::get('/auth/twitter/callback', 'AuthController@handleProviderCallback');
 
+Route::get('/auth/mail/register', 'AuthController@userMailRegister');
+Route::post('/auth/mail/registerCallback', 'AuthController@userMailRegisterCallback');
+Route::get('/auth/mail/login', 'AuthController@userMailLogin');
+Route::post('/auth/mail/callback', 'AuthController@userMailCallback');
+
 Route::get('/logout', 'AuthController@logout');
 
 Route::get('/ranking', 'MainController@ranking');

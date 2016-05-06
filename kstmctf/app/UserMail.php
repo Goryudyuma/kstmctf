@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserMail extends Model
 {
-	protected $table = 'ctfusermain';
+	protected $table = 'ctfusersmail';
 
 	/**
 	 * The attributes that are mass assignable.   
