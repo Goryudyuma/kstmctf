@@ -53,7 +53,7 @@ class MainController extends Controller
 
 	public function iskstmuser() {
 		if (!Auth::check()) {
-			return redirect('/');
+			return false;
 		}
 		if (UserKstm::Where('userid', Auth::user()->id) -> count()) {
 			return true;
