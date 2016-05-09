@@ -23,7 +23,7 @@ class MainController extends Controller
 		if (!Auth::check()) {
 			return redirect('/');
 		}
-		$result = Question::Join('ctfusers as c', function($join){$join->on('question.userid', '=', 'c.id');})->leftJoin('solved', function($join){$join->on('question.id', '=', 'solved.qid')->where('solved.userid', '=', Auth::user()->id);})->select('solved.userid as suid', 'question.title as title', 'question.id as url', 'nickname')->get();
+		$result = Question::Join('ctfusers as c', function($join){$join->on('question.userid', '=', 'c.id');})->leftJoin('openquestion', function($join){$join->on('question.id', '=', 'openquestion.questionid')->where('openquestion.userid', '=', Auth::user()->id);})->leftJoin('solved', function($join){$join->on('question.id', '=', 'solved.qid')->where('solved.userid', '=', Auth::user()->id);})->select('solved.userid as suid', 'openquestion.userid as openuid', 'question.title as title', 'question.id as url', 'nickname')->get();
 		return view('index')->with('result', $result);
 	}
 
@@ -134,7 +134,7 @@ class MainController extends Controller
 		$question['solvedcount'] = Solved::where('qid', '=', $questionid)->count();
 		if ($question['solvedcount'] !== 0) {
 			$question['avetime'] = Solved::where('qid', '=', $questionid)->join('openquestion', function($join) {$join->on('solved.qid', '=', 'questionid')->on('solved.userid', '=', 'openquestion.userid');})->groupBy('qid')->avg(DB::raw('(solved.created_at - openquestion.created_at)'));
-			$question['mintime'] = Solved::where('qid', '=', $questionid)->join('openquestion', function($join) {$join->on('solved.qid', '=', 'questionid')->on('solved.userid', '=', 'openquestion.userid');})->orderBy('time')->select(DB::raw('(`solved`.`created_at` - `openquestion`.`created_at`) as time, `solved`.`userid` as `userid`'))->first();
+			$question['mintime'] = Solved::where('qid', '=', $questionid)->join('openquestion', function($join) {$join->on('solved.qid', '=', 'openquestion.questionid')->on('solved.userid', '=', 'openquestion.userid');})->orderBy('time')->select(DB::raw('(`solved`.`created_at` - `openquestion`.`created_at`) as time, `solved`.`userid` as userid'))->first();
 			$question['minuser'] = User::where('id', '=', $question['mintime']['userid'])->first();
 		}
 		$question['title'] = Question::where('id', '=', $questionid)->first()['title'];

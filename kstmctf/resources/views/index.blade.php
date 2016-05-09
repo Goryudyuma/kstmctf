@@ -30,6 +30,8 @@
 			<td>
 @if($question->suid)
 ok
+@elseif($question->openuid)
+opened
 @endif
 </td>
 
