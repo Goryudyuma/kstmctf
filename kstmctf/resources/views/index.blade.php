@@ -21,22 +21,27 @@
 	</tr>
 	</thead>
 		<tbody>
-@foreach($result as $question)
-		<tr>
-<td>
-{{Html::link('/content/'.$question->url, $question->title)}}
-</td>
+		@foreach($result as $question)
+			@if($question->suid)
+			<tr class="success">
+			@elseif($question->openuid)
+			<tr class="warning">
+			@else
+			<tr>
+			@endif
+			<td>
+				{{Html::link('/content/'.$question->url, $question->title)}}
+			</td>
 			<td>{{$question->nickname}}</td>
 			<td>
-@if($question->suid)
-ok
-@elseif($question->openuid)
-opened
-@endif
-</td>
-
-		</tr>
-@endforeach
+				@if($question->suid)
+				ok
+				@elseif($question->openuid)
+				opened
+				@endif
+			</td>
+			</tr>
+		@endforeach
 		</tbody>
 	</table>
 </div>
