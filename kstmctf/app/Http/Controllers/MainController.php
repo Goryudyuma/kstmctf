@@ -24,7 +24,7 @@ class MainController extends Controller
 		if (!Auth::check()) {
 			return redirect('/');
 		}
-		$result = Question::Join('ctfusers as c', function($join){$join->on('question.userid', '=', 'c.id');})->leftJoin('openquestion', function($join){$join->on('question.urlid', '=', 'openquestion.urllistid')->where('openquestion.userid', '=', Auth::user()->id);})->leftJoin('solved', function($join){$join->on('question.id', '=', 'solved.qid')->where('solved.userid', '=', Auth::user()->id);})->select('solved.userid as suid', 'openquestion.userid as openuid', 'question.title as title', 'question.id as url', 'nickname')->get();
+		$result = Question::Join('ctfusers as c', 'c.id', '=', 'question.userid')->leftJoin('openquestion', function($join){$join->on('question.urlid', '=', 'openquestion.urllistid')->where('openquestion.userid', '=', Auth::user()->id);})->leftJoin('solved', function($join){$join->on('question.id', '=', 'solved.qid')->where('solved.userid', '=', Auth::user()->id);})->select('solved.userid as suid', 'openquestion.userid as openuid', 'question.title as title', 'question.id as url', 'nickname')->get();
 		return view('index')->with('result', $result);
 	}
 
