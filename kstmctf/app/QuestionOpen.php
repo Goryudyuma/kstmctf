@@ -10,6 +10,6 @@ class QuestionOpen extends Model
 	protected $table = 'openquestion';
 
 	protected $fillable = [
-		'userid', 'questionid'
+		'userid', 'urllistid'
 	];
 }
