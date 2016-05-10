@@ -50,6 +50,12 @@
 		@endif
 	</ul><ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
 		@if(Auth::check())
+		@if(Request::url() == env('APP_URL','.').'mypage')
+		<li class="active">
+		@else
+		<li>
+		@endif
+		{{Html::link(env('APP_URL','.').'mypage', 'mypage')}}</li>
 		<li>{{Html::link(env('APP_URL','.').'logout', 'logout')}}</li>
 		@endif
 	</ul>

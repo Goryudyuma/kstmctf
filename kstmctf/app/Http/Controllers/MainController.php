@@ -145,4 +145,13 @@ class MainController extends Controller
 		$question['title'] = Question::where('id', '=', $questionid)->first()['title'];
 		return view('content')->with('question', $question);
 	}
+
+	public function mypage()
+	{
+		$mydata=[];
+		$mydata['count']['question'] = Question::count();	
+		$mydata['count']['opened'] = QuestionOpen::where('userid', '=', Auth::user()->id)->count();
+		$mydata['count']['solved'] = solved::where('userid', '=', Auth::user()->id)->count();
+		return view('mypage')->with('mydata', $mydata);
+	}
 }

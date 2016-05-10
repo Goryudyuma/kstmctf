@@ -31,6 +31,8 @@ Route::get('/logout', 'AuthController@logout');
 
 Route::get('/ranking', 'MainController@ranking');
 
+Route::get('/mypage', 'MainController@mypage');
+
 Route::get('/question/{questionid}', 'MainController@question')->where('questionid', '[0-9]+');
 Route::get('/content/{questionid}', 'MainController@content')->where('questionid', '[0-9]+');
 
