@@ -17,7 +17,7 @@
 	<tr>
 		<th>問題</th>
 		<th>作問者</th>
-		<th>solved</th>
+		<th>状態</th>
 	</tr>
 	</thead>
 		<tbody>
@@ -35,7 +35,7 @@
 			<td>{{$question->nickname}}</td>
 			<td>
 				@if($question->suid)
-				ok
+				solved
 				@elseif($question->openuid)
 				opened
 				@endif
