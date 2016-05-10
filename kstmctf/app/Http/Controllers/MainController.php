@@ -139,8 +139,8 @@ class MainController extends Controller
 		$question['challengecount'] = QuestionOpen::where('urllistid', '=', $urlid)->count();
 		$question['solvedcount'] = Solved::where('qid', '=', $questionid)->count();
 		if ($question['solvedcount'] !== 0) {
-			$question['avetime'] = Solved::where('qid', '=', $questionid)->join('openquestion', function($join) use ($questionid) {$join->on('solved.userid', '=', 'openquestion.userid')->where('solved.qid', '=', $questionid);})->groupBy('qid')->avg(DB::raw('(solved.created_at - openquestion.created_at)'));
-			$question['mintime'] = Solved::where('qid', '=', $questionid)->join('openquestion', function($join) use ($questionid) {$join->on('solved.userid', '=', 'openquestion.userid')->where('solved.qid', '=', $questionid);})->join('ctfusers', 'solved.userid', '=', 'ctfusers.id')->orderBy('time')->select(DB::raw('(`solved`.`created_at` - `openquestion`.`created_at`) as time, `solved`.`userid` as userid, `ctfusers`.`nickname` as nickname'))->get();
+			$question['avetime'] = Solved::where('qid', '=', $questionid)->join('question', 'question.id', '=', 'solved.qid')->join('openquestion', function($join) use ($questionid) {$join->on('solved.userid', '=', 'openquestion.userid')->on('openquestion.urllistid', '=', 'question.urlid');})->groupBy('qid')->avg(DB::raw('(solved.created_at - openquestion.created_at)'));
+			$question['mintime'] = Solved::where('qid', '=', $questionid)->join('question', 'question.id', '=', 'solved.qid')->join('openquestion', function($join) use ($questionid) {$join->on('solved.userid', '=', 'openquestion.userid')->on('openquestion.urllistid', '=', 'question.urlid');})->join('ctfusers', 'solved.userid', '=', 'ctfusers.id')->orderBy('time')->select(DB::raw('(`solved`.`created_at` - `openquestion`.`created_at`) as time, `solved`.`userid` as userid, `ctfusers`.`nickname` as nickname'))->get();
 		}
 		$question['title'] = Question::where('id', '=', $questionid)->first()['title'];
 		return view('content')->with('question', $question);
