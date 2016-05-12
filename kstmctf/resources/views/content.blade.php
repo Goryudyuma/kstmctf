@@ -4,6 +4,8 @@
 <h1>問題{{$question['id']}}:{{$question['title']}}</h1>
 問題文を見た人数:{{$question['challengecount']}}<br />
 解けた人数:{{$question['solvedcount']}}<br />
+作問者id:{{$question['creator']['id']}}<br />
+作問者:{{$question['creator']['nickname']}}<br />
 @if ($question['solvedcount'] !== 0)
 平均時間:{{$question['avetime']}}秒<br />
 @endif
