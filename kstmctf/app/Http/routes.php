@@ -35,4 +35,4 @@ Route::get('/mypage', 'MainController@mypage');
 
 Route::get('/question/{questionid}', 'MainController@question')->where('questionid', '[0-9]+');
 Route::get('/content/{questionid}', 'MainController@content')->where('questionid', '[0-9]+');
-
+Route::get('/contentjson/{questionid}', 'MainController@contentjson')->where('question', '[0-9]+');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App;
 use DB;
 use App\Question;
 use App\Solved;
@@ -153,5 +154,17 @@ class MainController extends Controller
 		$mydata['count']['opened'] = QuestionOpen::where('userid', '=', Auth::user()->id)->count();
 		$mydata['count']['solved'] = solved::where('userid', '=', Auth::user()->id)->count();
 		return view('mypage')->with('mydata', $mydata);
+	}
+
+	public function contentjson($questionid)
+	{
+		if (!Auth::check()) {
+			App::abort(401);	
+		}
+		if(is_null(Question::where('id', '=', $questionid)->first())) {
+			return redirect('/questionlist');
+		}
+		$json = Solved::where('qid', '=', $questionid)->join('question', 'question.id', '=', 'solved.qid')->join('openquestion', function($join) use ($questionid) {$join->on('solved.userid', '=', 'openquestion.userid')->on('openquestion.urllistid', '=', 'question.urlid');})->join('ctfusers', 'solved.userid', '=', 'ctfusers.id')->orderBy('time')->select(DB::raw('(`solved`.`created_at` - `openquestion`.`created_at`) as time, `solved`.`userid` as userid, `ctfusers`.`nickname` as nickname'))->get();
+		return response()->json($json);
 	}
 }
