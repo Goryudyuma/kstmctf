@@ -136,6 +136,8 @@ class MainController extends Controller
 			return redirect('/questionlist');
 		}
 		$urlid = Question::where('id', '=', $questionid)->select('urlid')->first()['urlid'];
+		$question['creator']['id'] = Question::where('id', '=', $questionid)->select('userid')->first()['userid'];
+		$question['creator']['nickname'] = User::where('id', '=', $question['creator']['id'])->select('nickname')->first()['nickname'];
 		$question['id'] = $questionid;
 		$question['challengecount'] = QuestionOpen::where('urllistid', '=', $urlid)->count();
 		$question['solvedcount'] = Solved::where('qid', '=', $questionid)->count();
