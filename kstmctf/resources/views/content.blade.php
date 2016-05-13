@@ -2,10 +2,10 @@
 
 @section('content')
 <h1>問題{{$question['id']}}:{{$question['title']}}</h1>
+作問者:{{$question['creator']['nickname']}}<br />
 問題文を見た人数:{{$question['challengecount']}}<br />
 解けた人数:{{$question['solvedcount']}}<br />
-作問者id:{{$question['creator']['id']}}<br />
-作問者:{{$question['creator']['nickname']}}<br />
+<!--作問者id:{{$question['creator']['id']}}<br />-->
 @if ($question['solvedcount'] !== 0)
 平均時間:{{$question['avetime']}}秒<br />
 @endif
@@ -18,30 +18,17 @@
 <div id="graph"></div>
 </div>
 <script>
-var scale = {
-	1:"1秒~",
-	30:"30秒~",
-	60:"1分~",
-	1800:"30分~",
-	3600:"1時間~",
-	43200:"12時間~",
-	86400:"24時間~",
-	1296000:"15日~",
-	2592000:"1ヵ月~",
-	31536000:"1年~",
-	315360000:"10年~"
-};
+var scale = [0, 30, 60, 1800, 3600, 43200, 86400, 1296000, 2592000, 31536000, 315360000];
+var categories = ["0秒～","30秒～","1分～","30分～","1時間～","12時間～","1日～","15日～","1ヵ月～","1年～","10年～"];
 var chart;
 $.getJSON("../contentjson/{{$question['id']}}",function(data){
 	var values = [0,0,0,0,0,0,0,0,0,0,0];
-	var categories = [];
-	for(key in scale){
-		categories.push(scale[key]);
-	}
+	console.log(data);
 	for(var i=0;i<data.length;i++){
-		for(key in scale){
-			if(data[i] >= scale[key]){
-				values[key]++;
+		var p=0;
+		for(var j=scale.length-1;j>=0;j--){
+			if(data[i].time >= scale[j]){
+				values[j]++;
 				break;
 			}
 		}
